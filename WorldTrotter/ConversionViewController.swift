@@ -5,7 +5,6 @@
 //  Created by Bobby Hamrick on 1/17/17.
 //  Copyright © 2017 Bobby Hamrick. All rights reserved.
 //
-
 import UIKit
 
 class ConversionViewController: UIViewController{
