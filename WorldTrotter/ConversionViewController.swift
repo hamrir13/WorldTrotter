@@ -92,23 +92,16 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
         updateCelsiusLabel()
     }
     
-    func randomColorGenerator() -> Int{
-        let randomColor = Int(arc4random_uniform(3))
-        return randomColor
-    }
     
     override func viewWillAppear(_ animated: Bool) {
-        let backColor = [UIColor(red: 193/255, green: 176/255, blue: 81/255, alpha: 1),
-                         UIColor(red: 193/255, green: 176/255, blue: 210/255, alpha: 1),
-                         UIColor(red: 0/255, green: 176/255, blue: 210/255, alpha: 1),
-                         UIColor(red: 255/255, green: 161/255, blue: 0/255, alpha: 1),
-                         UIColor(red: 87/255, green: 141/255, blue: 155/255, alpha: 1)
-        ]
-        
-        let ranNum = randomColorGenerator()
-        let color = backColor[ranNum]
+        let redColor = Double(arc4random_uniform(10) + 0)/10
+        let greenColor = Double(arc4random_uniform(10) + 0)/10
+        let blueColor = Double(arc4random_uniform(10) + 0)/10
+
+        let color = UIColor(red: CGFloat(redColor), green: CGFloat(greenColor), blue: CGFloat(blueColor), alpha: 1)
         
         self.view.backgroundColor = color
+        
         
         
     }
