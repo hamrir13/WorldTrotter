@@ -102,7 +102,5 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
         
         self.view.backgroundColor = color
         
-        
-        
     }
 }

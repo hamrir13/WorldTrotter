@@ -88,24 +88,41 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
     }
     func findLocation(_ sender: UIButton){
+        locationManager.delegate = self
         //allow location services
         locationManager.requestWhenInUseAuthorization()
-        
-        //zoom in on users location
+        //show the users location
         mapView.showsUserLocation = true
-        
-        print(mapView.userLocation.coordinate)
-
-        
-        //resize to appropriate size
-        updateMapView(mapView: mapView, didUpdateUserLocation: mapView.userLocation)
+        //show and zoom on users location
+        locationManager.startUpdatingLocation()
         
     }
     
-    func updateMapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
-        let zoomedInCurrentLocation = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 5, 5)
-        print(userLocation.coordinate)
-        mapView.setRegion(zoomedInCurrentLocation, animated: true)
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        //get the users location
+        let userLocation: CLLocation = locations[0]
+        //set the degress of the latitude and longitude
+        let latDelta: CLLocationDegrees = 0.05
+        let longDelta: CLLocationDegrees = 0.05
+        //make a span of the users location
+        let span: MKCoordinateSpan = MKCoordinateSpanMake(latDelta, longDelta)
+        //get the longitude and latitude coords of the user
+        let loc: CLLocationCoordinate2D = CLLocationCoordinate2DMake(userLocation.coordinate.latitude, userLocation.coordinate.longitude)
+        //declare the region that the user is in to adjust the view
+        let region: MKCoordinateRegion = MKCoordinateRegionMake(loc, span)
+        //set the region
+        mapView.setRegion(region, animated: false)
+        
+        //Create a pin to drop users location
+        let pin = MKPointAnnotation()
+        //set the location of the pin to the users location
+        pin.coordinate.latitude = userLocation.coordinate.latitude
+        pin.coordinate.longitude = userLocation.coordinate.longitude
+        //set the title of the pin
+        pin.title = "Your Location"
+        //add the pin to the map
+        mapView.addAnnotation(pin)
+        
     }
 
     override func viewDidLoad() {
