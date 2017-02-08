@@ -23,9 +23,4 @@ class WebViewController: UIViewController{
         webView.load(URLRequest(url: url))
         
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        print("WebViewController loaded its view")
-    }
 }
