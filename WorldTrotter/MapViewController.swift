@@ -17,16 +17,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     //button used to access user location
     let locationButton = UIButton()
     
-    //hold the user location
-    var userLocation: MKUserLocation!
-    //holds the latitude coordinate of the user
-    var userLat: Double?
-    //holds the longitude coordinate of the user
-    var userLong: Double?
-    
     //variable used to shift through array of pinned locations
     var i: Int = 0
-    var j: Int = 0
     
     override func loadView() {
         
@@ -43,13 +35,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         //set it as the view of the controller
         view = mapView
         
-        //reset the user's location
-        userLat = 0.0
-        userLong = 0.0
-        
         //set i to -1 to start at beginning of array
         i = -1
-        j = 0
         
         //programmatically create constraints
         let standardString = NSLocalizedString("Standard", comment: "Standard map view")
@@ -143,91 +130,79 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        //get ths users lat and long coordinates
-        userLat = mapView.userLocation.coordinate.latitude
-        userLong = mapView.userLocation.coordinate.longitude
         //define a span for zooming in on user's loc
         let latDelta: CLLocationDegrees = 0.05
         let longDelta: CLLocationDegrees = 0.05
         //make a span of the users location
         let span: MKCoordinateSpan = MKCoordinateSpanMake(latDelta, longDelta)
         //get the longitude and latitude coords of the user
-        let loc: CLLocationCoordinate2D = CLLocationCoordinate2DMake(userLat!, userLong!)
+        let loc: CLLocationCoordinate2D = CLLocationCoordinate2DMake(mapView.userLocation.coordinate.latitude,
+                                                                     mapView.userLocation.coordinate.longitude)
         //declare the region that the user is in to adjust the view
         let region: MKCoordinateRegion = MKCoordinateRegionMake(loc, span)
         //set the region
         mapView.setRegion(region, animated: false)
     }
     
+    //fun revert(UIButton)
+    //reset the view to default by calling the loadView() func
     func revert(_ sender: UIButton){
         loadView()
     }
     
+    //func dropNextPinLocation(UIButton)
+    //when the pin button is tapped drop a pin on the POI
     func dropNextPinLocation(_ sender: UIButton){
-        
-        let bornLat: Double = 38.9757
-        let bornLong: Double = -77.6419
-        //create pin to drop on hometown
-        let bornPin = MKPointAnnotation()
-        //set the location of the pin to the users location
-        bornPin.coordinate.latitude = bornLat
-        bornPin.coordinate.longitude = bornLong
-        //set the title of the pin
-        bornPin.title = "My hometown"
 
-
+        //create pin variable by calling create pin func
+        let pin = createPins()
+        //add the pin to the view
+        mapView.addAnnotation(pin)
         
-        let funLat: Double = 51.5833
-        let funLong: Double = -0.1833
-        //create pin to drop on interesting location
-        let funPin = MKPointAnnotation()
-        //set the location of the pin to the users location
-        funPin.coordinate.latitude = funLat
-        funPin.coordinate.longitude = funLong
-        //set the title of the pin
-        funPin.title = "My hometown"
-        
-        let roundHillLat: Double = 18.4587
-        let roundHillLong: Double = -78.0113
-        //Create a pin to drop users location
-        let roundHill = MKPointAnnotation()
-        //set the location of the pin to the users location
-        roundHill.coordinate.latitude = roundHillLat
-        roundHill.coordinate.longitude = roundHillLong
-        //set the title of the pin
-        roundHill.title = "Where I want to be"
-        
-        let pinArray: [MKPointAnnotation] = [bornPin, funPin, roundHill]
-        
-        var locArray: [Double] = [bornLat, bornLong,
-                                  funLat, funLong,
-                                  roundHillLat, roundHillLong
-                                 ]
-            
-        if i <= 3 {
-            i += 2
-            if j > 0{
-                mapView.removeAnnotation(pinArray[j-1])
-            }
-            mapView.addAnnotation(pinArray[j])
-            j += 1
-            if i == 5 {
-                sender.addTarget(self, action:#selector(MapViewController.revert(_:)), for: .touchUpInside)
-            }
+        //once all POI have been pinned, set the target of the pin button 
+        //to revert to reset the view to default
+        if i == 5 {
+            sender.addTarget(self, action:#selector(MapViewController.revert(_:)), for: .touchUpInside)
         }
 
+        //-- set the camera to be zoomed in on pin --
         //set the degress of the latitude and longitude
         let latDelta: CLLocationDegrees = 0.05
         let longDelta: CLLocationDegrees = 0.05
         //make a span of the users location
         let span: MKCoordinateSpan = MKCoordinateSpanMake(latDelta, longDelta)
         //get the longitude and latitude coords of the user
-        let loc: CLLocationCoordinate2D = CLLocationCoordinate2DMake(locArray[i-1], locArray[i])
+        let loc: CLLocationCoordinate2D = CLLocationCoordinate2DMake(pin.coordinate.latitude, pin.coordinate.longitude)
         //declare the region that the user is in to adjust the view
         let region: MKCoordinateRegion = MKCoordinateRegionMake(loc, span)
         //set the region
         mapView.setRegion(region, animated: false)
     }
+    
+    //func createPins()
+    //create the specifics of the pins that need to be dropped
+    //return the pin to the dropNextPinLocation func
+    func createPins() -> MKPointAnnotation {
+        //create array of all lat and long coords of POI
+        let pinCoords: [Double] = [38.9757, -77.6419, 51.5833, -0.1833, 18.4587, -78.0113]
+        
+        //-- set the lat and long to correct pair in array --
+        if i<=3 {
+            i+=2
+        }
+        let curLat: Double = pinCoords[i-1]
+        let curLong: Double = pinCoords[i]
+        
+        //create pin to drop on hometown
+        let newPin = MKPointAnnotation()
+        //set the location of the pin to the users location
+        newPin.coordinate.latitude = curLat
+        newPin.coordinate.longitude = curLong
+
+        return newPin
+
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
