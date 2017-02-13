@@ -75,6 +75,9 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
         let existingTextHasDecimalSeperator = textField.text?.range(of: decimalSeperator)
         let replacementTextHasDecimalSeperator = string.range(of: decimalSeperator)
         
+        //let existingTextHasNeg = textField.text?.range(of: "-")
+        //let replacementTextHasNeg = string.range(of: "-")
+        
         if string.rangeOfCharacter(
             from: NSCharacterSet(charactersIn: "-0123456789.,").inverted) != nil {
             return false
@@ -85,6 +88,7 @@ class ConversionViewController: UIViewController, UITextFieldDelegate {
         }else{
             return true
         }
+
     }
     
     override func viewDidLoad() {
