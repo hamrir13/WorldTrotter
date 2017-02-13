@@ -20,6 +20,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     //variable used to shift through array of pinned locations
     var i: Int = 0
     
+    //variable used to keep track of current pin on map
+    var curPin: MKPointAnnotation?
+    
     override func loadView() {
         
         //create a map view
@@ -153,7 +156,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     //func dropNextPinLocation(UIButton)
     //when the pin button is tapped drop a pin on the POI
     func dropNextPinLocation(_ sender: UIButton){
-
+        //remove the current pin, if any, on map
+        if i > -1 {
+            mapView.removeAnnotation(curPin!)
+        }
         //create pin variable by calling create pin func
         let pin = createPins()
         //add the pin to the view
@@ -199,6 +205,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         newPin.coordinate.latitude = curLat
         newPin.coordinate.longitude = curLong
 
+        //set the current pin to the one just created
+        curPin = newPin
+        
         return newPin
 
     }
