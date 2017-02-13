@@ -174,7 +174,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         bornPin.coordinate.longitude = bornLong
         //set the title of the pin
         bornPin.title = "My hometown"
-        //add the pin to the map
+
 
         
         let funLat: Double = 51.5833
@@ -186,7 +186,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         funPin.coordinate.longitude = funLong
         //set the title of the pin
         funPin.title = "My hometown"
-        //add the pin to the map
         
         let roundHillLat: Double = 18.4587
         let roundHillLong: Double = -78.0113
@@ -196,8 +195,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         roundHill.coordinate.latitude = roundHillLat
         roundHill.coordinate.longitude = roundHillLong
         //set the title of the pin
-        roundHill.title = "My Current Location"
-        //add the pin to the map
+        roundHill.title = "Where I want to be"
         
         let pinArray: [MKPointAnnotation] = [bornPin, funPin, roundHill]
         
