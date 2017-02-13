@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		26ACB6091E5220D6006365D9 /* locateme.png in Resources */ = {isa = PBXBuildFile; fileRef = 26ACB6061E5220D6006365D9 /* locateme.png */; };
+		26ACB60A1E5220D6006365D9 /* pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 26ACB6071E5220D6006365D9 /* pin.png */; };
+		26ACB60C1E52231F006365D9 /* revert.png in Resources */ = {isa = PBXBuildFile; fileRef = 26ACB60B1E52231F006365D9 /* revert.png */; };
 		B60EE7111E4A8C7F0016DD31 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B60EE7131E4A8C7F0016DD31 /* Localizable.strings */; };
 		B62197111E3680460001E914 /* ConversionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62197101E3680460001E914 /* ConversionViewController.swift */; };
 		B62B68E51E28112100011B27 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62B68E41E28112100011B27 /* AppDelegate.swift */; };
@@ -18,9 +21,6 @@
 		B6388DBF1E437D1000D856AD /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6388DBE1E437D1000D856AD /* MapKit.framework */; };
 		B6388DC11E438FFC00D856AD /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6388DC01E438FFC00D856AD /* MapViewController.swift */; };
 		B6388DC31E43D8DD00D856AD /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6388DC21E43D8DD00D856AD /* WebViewController.swift */; };
-		B6CDE8AF1E513BC700FA2AD0 /* locateme.png in Resources */ = {isa = PBXBuildFile; fileRef = B6CDE8AE1E513BC700FA2AD0 /* locateme.png */; };
-		B6CDE8B11E513C2400FA2AD0 /* revert.png in Resources */ = {isa = PBXBuildFile; fileRef = B6CDE8B01E513C2400FA2AD0 /* revert.png */; };
-		B6CDE8B71E5148C600FA2AD0 /* pin.png in Resources */ = {isa = PBXBuildFile; fileRef = B6CDE8B61E5148C600FA2AD0 /* pin.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +41,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		26ACB6061E5220D6006365D9 /* locateme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = locateme.png; path = ../../../Desktop/locateme.png; sourceTree = "<group>"; };
+		26ACB6071E5220D6006365D9 /* pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pin.png; path = ../../../Desktop/pin.png; sourceTree = "<group>"; };
+		26ACB60B1E52231F006365D9 /* revert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = revert.png; path = ../../../Desktop/revert.png; sourceTree = "<group>"; };
 		B601AC4E1E4A7A0E004535AB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		B601AC4F1E4A7B22004535AB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		B60EE7121E4A8C7F0016DD31 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -64,9 +67,6 @@
 		B6388DBE1E437D1000D856AD /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		B6388DC01E438FFC00D856AD /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		B6388DC21E43D8DD00D856AD /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
-		B6CDE8AE1E513BC700FA2AD0 /* locateme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = locateme.png; path = ../../../../Desktop/locateme.png; sourceTree = "<group>"; };
-		B6CDE8B01E513C2400FA2AD0 /* revert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = revert.png; path = ../../../../Desktop/revert.png; sourceTree = "<group>"; };
-		B6CDE8B61E5148C600FA2AD0 /* pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pin.png; path = ../../../../Desktop/pin.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,9 +123,9 @@
 				B62B68E81E28112100011B27 /* Main.storyboard */,
 				B6388DC21E43D8DD00D856AD /* WebViewController.swift */,
 				B6388DC01E438FFC00D856AD /* MapViewController.swift */,
-				B6CDE8B61E5148C600FA2AD0 /* pin.png */,
-				B6CDE8B01E513C2400FA2AD0 /* revert.png */,
-				B6CDE8AE1E513BC700FA2AD0 /* locateme.png */,
+				26ACB60B1E52231F006365D9 /* revert.png */,
+				26ACB6061E5220D6006365D9 /* locateme.png */,
+				26ACB6071E5220D6006365D9 /* pin.png */,
 				B60EE7131E4A8C7F0016DD31 /* Localizable.strings */,
 				B62197101E3680460001E914 /* ConversionViewController.swift */,
 				B62B68EB1E28112100011B27 /* Assets.xcassets */,
@@ -271,12 +271,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B62B68EF1E28112100011B27 /* LaunchScreen.storyboard in Resources */,
+				26ACB6091E5220D6006365D9 /* locateme.png in Resources */,
+				26ACB60C1E52231F006365D9 /* revert.png in Resources */,
 				B60EE7111E4A8C7F0016DD31 /* Localizable.strings in Resources */,
-				B6CDE8AF1E513BC700FA2AD0 /* locateme.png in Resources */,
-				B6CDE8B71E5148C600FA2AD0 /* pin.png in Resources */,
+				26ACB60A1E5220D6006365D9 /* pin.png in Resources */,
 				B62B68EC1E28112100011B27 /* Assets.xcassets in Resources */,
 				B62B68EA1E28112100011B27 /* Main.storyboard in Resources */,
-				B6CDE8B11E513C2400FA2AD0 /* revert.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

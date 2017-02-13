@@ -9,18 +9,15 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate {
  
     //delcare variable to later create map view
     var mapView: MKMapView!
     
-    //declare variable for finding users location
-    var locationManager: CLLocationManager!
-    
     //button used to access user location
     let locationButton = UIButton()
     
-    //hold the user locatoin
+    //hold the user location
     var userLocation: MKUserLocation!
     //holds the latitude coordinate of the user
     var userLat: Double?
@@ -29,6 +26,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     //variable used to shift through array of pinned locations
     var i: Int = 0
+    var j: Int = 0
     
     override func loadView() {
         
@@ -37,17 +35,21 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.delegate = self
         
         //initialize locationManager variable
-        locationManager = CLLocationManager()
+        //declare variable for finding users location
+        let locationManager: CLLocationManager = CLLocationManager()
+        //request location services
+        locationManager.requestWhenInUseAuthorization()
         
         //set it as the view of the controller
         view = mapView
         
-        //set the users location to 0
+        //reset the user's location
         userLat = 0.0
         userLong = 0.0
         
         //set i to -1 to start at beginning of array
         i = -1
+        j = 0
         
         //programmatically create constraints
         let standardString = NSLocalizedString("Standard", comment: "Standard map view")
@@ -89,6 +91,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         locationButton.setImage(UIImage(named: "locateme.png"), for: .normal)
         //set the background color of the button
         locationButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        //add constraint
+        locationButton.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor, constant: -250)
         //when the button is pushed find the location
         locationButton.addTarget(self, action: #selector(MapViewController.findLocation(_:)), for: .touchUpInside)
         //add the button to the view
@@ -103,8 +107,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         nextLoc.setImage(UIImage(named: "pin.png"), for: .normal)
         //set the background color of the button
         nextLoc.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        //add constraint
+        locationButton.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor, constant: -250)
         //when the button is pushed find the location
-        nextLoc.addTarget(self, action: #selector(MapViewController.nextPinLocation(_:)), for: .touchUpInside)
+        nextLoc.addTarget(self, action: #selector(MapViewController.dropNextPinLocation(_:)), for: .touchUpInside)
         //add the button to the view
         view.addSubview(nextLoc)
         
@@ -132,29 +138,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         //so we can go back to the original map view
         sender.setImage(UIImage(named: "revert.png"), for: .normal)
         sender.addTarget(self, action: #selector(MapViewController.revert(_:)), for: .touchUpInside)
-        //set the delegate to the MapViewController
-        locationManager.delegate = self
-        //set accuracy
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        //request location services
-        locationManager.requestWhenInUseAuthorization()
         //show the users location
-        mapView.showsUserLocation = true
-        //show and zoom on users location
-        locationManager.startUpdatingLocation()
+        mapView.showsUserLocation = true //this calls mapView function below to get users location
     }
     
-    //func locationManager(CLLocationMananger, CLLocation)
-    //when the .startUpdatingLocation() function is called this function
-    //is repeatedly called to keep up with user location
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
-        //stop updating the location so we can change the camera view of the map
-        locationManager.stopUpdatingLocation()
-        //get the users location
-        let userLocation: CLLocation = locations[0]
-        userLat = userLocation.coordinate.latitude
-        userLong = userLocation.coordinate.longitude
-        //set the degress of the latitude and longitude
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        //get ths users lat and long coordinates
+        userLat = mapView.userLocation.coordinate.latitude
+        userLong = mapView.userLocation.coordinate.longitude
+        //define a span for zooming in on user's loc
         let latDelta: CLLocationDegrees = 0.05
         let longDelta: CLLocationDegrees = 0.05
         //make a span of the users location
@@ -170,8 +162,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     func revert(_ sender: UIButton){
         loadView()
     }
-
-    func nextPinLocation(_ sender: UIButton){
+    
+    func dropNextPinLocation(_ sender: UIButton){
         
         let bornLat: Double = 38.9757
         let bornLong: Double = -77.6419
@@ -183,7 +175,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         //set the title of the pin
         bornPin.title = "My hometown"
         //add the pin to the map
-        mapView.addAnnotation(bornPin)
+
         
         let funLat: Double = 51.5833
         let funLong: Double = -0.1833
@@ -195,7 +187,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         //set the title of the pin
         funPin.title = "My hometown"
         //add the pin to the map
-        mapView.addAnnotation(funPin)
         
         let roundHillLat: Double = 18.4587
         let roundHillLong: Double = -78.0113
@@ -207,34 +198,23 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         //set the title of the pin
         roundHill.title = "My Current Location"
         //add the pin to the map
-        mapView.addAnnotation(roundHill)
         
-        var locArray: [Double]
+        let pinArray: [MKPointAnnotation] = [bornPin, funPin, roundHill]
         
-        if userLat == 0.0 {
-            locArray = [bornLat, bornLong,
-                        funLat, funLong,
-                        roundHillLat, roundHillLong
-            ]
+        var locArray: [Double] = [bornLat, bornLong,
+                                  funLat, funLong,
+                                  roundHillLat, roundHillLong
+                                 ]
             
-            if i <= 3 {
-                i += 2
-                print(i)
-                if i == 5 {
-                    sender.addTarget(self, action:#selector(MapViewController.revert(_:)), for: .touchUpInside)
-                }
+        if i <= 3 {
+            i += 2
+            if j > 0{
+                mapView.removeAnnotation(pinArray[j-1])
             }
-        }else{
-            locArray = [bornLat, bornLong,
-                        funLat, funLong,
-                        roundHillLat, roundHillLong,
-                        userLat!, userLong!
-            ]
-            
-            if i <= 5{
-                i += 2
-            }else{
-                i = 1
+            mapView.addAnnotation(pinArray[j])
+            j += 1
+            if i == 5 {
+                sender.addTarget(self, action:#selector(MapViewController.revert(_:)), for: .touchUpInside)
             }
         }
 
