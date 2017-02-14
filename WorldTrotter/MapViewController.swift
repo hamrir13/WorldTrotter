@@ -15,10 +15,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     var mapView: MKMapView!
     
     //button used to access user location
-    let locationButton = UIButton()
+    var locationManager: CLLocationManager!
     
     //variable used to shift through array of pinned locations
-    var i: Int = 0
+    var i: Int = -1
     
     //variable used to keep track of current pin on map
     var curPin: MKPointAnnotation?
@@ -31,15 +31,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         //initialize locationManager variable
         //declare variable for finding users location
-        let locationManager: CLLocationManager = CLLocationManager()
-        //request location services
-        locationManager.requestWhenInUseAuthorization()
+        locationManager = CLLocationManager()
         
         //set it as the view of the controller
         view = mapView
-        
-        //set i to -1 to start at beginning of array
-        i = -1
         
         //programmatically create constraints
         let standardString = NSLocalizedString("Standard", comment: "Standard map view")
@@ -74,15 +69,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         //determine users location
 
         //declare a button to initiate the finding location
-        let locationButton = UIButton(frame: CGRect(x: 30, y: 470, width: 50, height: 50))
+        let locationButton = UIButton(frame: CGRect(x: UIScreen.main.bounds.width * 0.10, y: UIScreen.main.bounds.height*0.75, width: 50, height: 50))
         //make the button circular
         locationButton.layer.cornerRadius = 0.5 * locationButton.bounds.size.width
         //set the title of the button
         locationButton.setImage(UIImage(named: "locateme.png"), for: .normal)
         //set the background color of the button
         locationButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-        //add constraint
-        locationButton.bottomAnchor.constraint(equalTo: bottomLayoutGuide.bottomAnchor, constant: -250)
         //when the button is pushed find the location
         locationButton.addTarget(self, action: #selector(MapViewController.findLocation(_:)), for: .touchUpInside)
         //add the button to the view
@@ -90,7 +83,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         
         //declare a button to initiate moving to the next pin Location
-        let nextLoc = UIButton(frame: CGRect(x: 290, y: 470, width: 50, height: 50))
+        let nextLoc = UIButton(frame: CGRect(x: UIScreen.main.bounds.width * 0.80, y: UIScreen.main.bounds.height*0.75, width: 50, height: 50))
+        print(UIScreen.main.bounds.height*0.75)
         //make the button circular
         nextLoc.layer.cornerRadius = 0.5 * locationButton.bounds.size.width
         //set the title of the button
@@ -103,7 +97,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         nextLoc.addTarget(self, action: #selector(MapViewController.dropNextPinLocation(_:)), for: .touchUpInside)
         //add the button to the view
         view.addSubview(nextLoc)
-        
     }
     
     func mapTypeChanged(_ segControl: UISegmentedControl) {
@@ -124,6 +117,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     //the app will get access to location and start showing the user's location
     //then will start updating the users location (if he/she moves)
     func findLocation(_ sender: UIButton){
+        //request location services
+        locationManager.requestWhenInUseAuthorization()
         //change the image of the button just hit to revert
         //so we can go back to the original map view
         sender.setImage(UIImage(named: "revert.png"), for: .normal)
@@ -160,12 +155,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         if i > -1 {
             mapView.removeAnnotation(curPin!)
         }
+        
         //create pin variable by calling create pin func
         let pin = createPins()
         //add the pin to the view
         mapView.addAnnotation(pin)
         
-        //once all POI have been pinned, set the target of the pin button 
+        //once all POI have been pinned, set the target of the pin button
         //to revert to reset the view to default
         if i == 5 {
             sender.addTarget(self, action:#selector(MapViewController.revert(_:)), for: .touchUpInside)
@@ -189,25 +185,26 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     //create the specifics of the pins that need to be dropped
     //return the pin to the dropNextPinLocation func
     func createPins() -> MKPointAnnotation {
-        //create array of all lat and long coords of POI
+        //create pin to drop on hometown
+        let newPin = MKPointAnnotation()
+        //create array of all lat and long coords of POIs
         let pinCoords: [Double] = [38.9757, -77.6419, 51.5833, -0.1833, 18.4587, -78.0113]
         
         //-- set the lat and long to correct pair in array --
         if i<=3 {
             i+=2
+        }else{
+            i = 1
         }
-        let curLat: Double = pinCoords[i-1]
-        let curLong: Double = pinCoords[i]
         
-        //create pin to drop on hometown
-        let newPin = MKPointAnnotation()
         //set the location of the pin to the users location
-        newPin.coordinate.latitude = curLat
-        newPin.coordinate.longitude = curLong
-
+        newPin.coordinate.latitude = pinCoords[i-1]
+        newPin.coordinate.longitude = pinCoords[i]
+        
         //set the current pin to the one just created
         curPin = newPin
-        
+        print("i = \(i)")
+
         return newPin
 
     }
