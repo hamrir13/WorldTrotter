@@ -151,7 +151,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     //func revert(UIButton)
     //reset the view to default by calling the loadView() func
     func revert(_ sender: UIButton){
-        print("Returned to default")
         if droppedPin == true {
             //define a span for zooming in on user's loc
             let latDelta: CLLocationDegrees = 0.05
