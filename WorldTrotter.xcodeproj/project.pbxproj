@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		26E173F31E54C1FC00E20F61 /* locateme.png in Resources */ = {isa = PBXBuildFile; fileRef = 26E173F01E54C1FC00E20F61 /* locateme.png */; };
-		26E173F41E54C1FC00E20F61 /* pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 26E173F11E54C1FC00E20F61 /* pin.png */; };
-		26E173F51E54C1FC00E20F61 /* revert.png in Resources */ = {isa = PBXBuildFile; fileRef = 26E173F21E54C1FC00E20F61 /* revert.png */; };
 		B60EE7111E4A8C7F0016DD31 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B60EE7131E4A8C7F0016DD31 /* Localizable.strings */; };
 		B62197111E3680460001E914 /* ConversionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62197101E3680460001E914 /* ConversionViewController.swift */; };
+		B62509BD1E56780600217A89 /* locateme.png in Resources */ = {isa = PBXBuildFile; fileRef = B62509BA1E56780600217A89 /* locateme.png */; };
+		B62509BE1E56780600217A89 /* pin.png in Resources */ = {isa = PBXBuildFile; fileRef = B62509BB1E56780600217A89 /* pin.png */; };
+		B62509BF1E56780600217A89 /* revert.png in Resources */ = {isa = PBXBuildFile; fileRef = B62509BC1E56780600217A89 /* revert.png */; };
 		B62B68E51E28112100011B27 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62B68E41E28112100011B27 /* AppDelegate.swift */; };
 		B62B68EA1E28112100011B27 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B62B68E81E28112100011B27 /* Main.storyboard */; };
 		B62B68EC1E28112100011B27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B62B68EB1E28112100011B27 /* Assets.xcassets */; };
@@ -41,9 +41,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		26E173F01E54C1FC00E20F61 /* locateme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = locateme.png; path = ../../../Desktop/locateme.png; sourceTree = "<group>"; };
-		26E173F11E54C1FC00E20F61 /* pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pin.png; path = ../../../Desktop/pin.png; sourceTree = "<group>"; };
-		26E173F21E54C1FC00E20F61 /* revert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = revert.png; path = ../../../Desktop/revert.png; sourceTree = "<group>"; };
 		B601AC4E1E4A7A0E004535AB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		B601AC4F1E4A7B22004535AB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		B60EE7121E4A8C7F0016DD31 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -52,6 +49,9 @@
 		B617949D1E4A8E2A006E0773 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		B617949E1E4A8E2A006E0773 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B62197101E3680460001E914 /* ConversionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversionViewController.swift; sourceTree = "<group>"; };
+		B62509BA1E56780600217A89 /* locateme.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = locateme.png; path = ../../../../Desktop/locateme.png; sourceTree = "<group>"; };
+		B62509BB1E56780600217A89 /* pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pin.png; path = ../../../../Desktop/pin.png; sourceTree = "<group>"; };
+		B62509BC1E56780600217A89 /* revert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = revert.png; path = ../../../../Desktop/revert.png; sourceTree = "<group>"; };
 		B62B68E11E28112100011B27 /* WorldTrotter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorldTrotter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B62B68E41E28112100011B27 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B62B68E91E28112100011B27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -123,9 +123,9 @@
 				B62B68E81E28112100011B27 /* Main.storyboard */,
 				B6388DC21E43D8DD00D856AD /* WebViewController.swift */,
 				B6388DC01E438FFC00D856AD /* MapViewController.swift */,
-				26E173F01E54C1FC00E20F61 /* locateme.png */,
-				26E173F11E54C1FC00E20F61 /* pin.png */,
-				26E173F21E54C1FC00E20F61 /* revert.png */,
+				B62509BA1E56780600217A89 /* locateme.png */,
+				B62509BB1E56780600217A89 /* pin.png */,
+				B62509BC1E56780600217A89 /* revert.png */,
 				B60EE7131E4A8C7F0016DD31 /* Localizable.strings */,
 				B62197101E3680460001E914 /* ConversionViewController.swift */,
 				B62B68EB1E28112100011B27 /* Assets.xcassets */,
@@ -272,9 +272,9 @@
 			files = (
 				B62B68EF1E28112100011B27 /* LaunchScreen.storyboard in Resources */,
 				B60EE7111E4A8C7F0016DD31 /* Localizable.strings in Resources */,
-				26E173F51E54C1FC00E20F61 /* revert.png in Resources */,
-				26E173F31E54C1FC00E20F61 /* locateme.png in Resources */,
-				26E173F41E54C1FC00E20F61 /* pin.png in Resources */,
+				B62509BF1E56780600217A89 /* revert.png in Resources */,
+				B62509BD1E56780600217A89 /* locateme.png in Resources */,
+				B62509BE1E56780600217A89 /* pin.png in Resources */,
 				B62B68EC1E28112100011B27 /* Assets.xcassets in Resources */,
 				B62B68EA1E28112100011B27 /* Main.storyboard in Resources */,
 			);

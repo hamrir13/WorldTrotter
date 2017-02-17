@@ -18,13 +18,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     var locationManager: CLLocationManager!
     
     //variable used to shift through array of pinned locations
-    var i: Int = -1
-    //variable used to know if we have dropped a pin or not
-    var droppedPin: Bool = false
+    var pinIndex: Int = -1
     
     //variable used to keep track of current pin on map
     var curPin: MKPointAnnotation?
     
+    //Make locationButton global to change target function
+    //and image based on current environment of the app
     var locationButton: UIButton!
     
     override func loadView() {
@@ -70,9 +70,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         leadingContraint.isActive = true
         trailingConstraint.isActive = true
         
-        //determine users location
 
-        //declare a button to initiate the finding location
+        //initialize a button to initiate the finding location of the user
         locationButton = UIButton(frame: CGRect(x: UIScreen.main.bounds.width * 0.10, y: UIScreen.main.bounds.height*0.75, width: 50, height: 50))
         //make the button circular
         locationButton.layer.cornerRadius = 0.5 * locationButton.bounds.size.width
@@ -81,7 +80,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         //set the background color of the button
         locationButton.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         //when the button is pushed find the location
-        locationButton.addTarget(self, action: #selector(MapViewController.findLocation(_:)), for: .touchUpInside)
+        locationButton.addTarget(self, action: #selector(findLocation(_:)), for: .touchUpInside)
         //add the button to the view
         view.addSubview(locationButton)
         
@@ -124,11 +123,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         locationManager.requestWhenInUseAuthorization()
         //change the image of the button just hit to revert
         //so we can go back to the original map view
-        locationButton.setImage(UIImage(named: "revert.png"), for: .normal)
-        locationButton.addTarget(self, action: #selector(MapViewController.revert(_:)), for: .touchUpInside)
-        //set droppedPin bool to false so that we can revert back to default view 
-        //when the current location button is hit twice
-        droppedPin = false
+        sender.removeTarget(self, action: #selector(findLocation(_:)), for: .touchUpInside)
+        sender.setImage(UIImage(named: "revert.png"), for: .normal)
+        sender.addTarget(self, action: #selector(revert(_:)), for: .touchUpInside)
         //show the users location
         mapView.showsUserLocation = true //this calls mapView function below to get users location
     }
@@ -151,32 +148,25 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     //func revert(UIButton)
     //reset the view to default by calling the loadView() func
     func revert(_ sender: UIButton){
-        if droppedPin == true {
-            //define a span for zooming in on user's loc
-            let latDelta: CLLocationDegrees = 0.05
-            let longDelta: CLLocationDegrees = 0.05
-            //make a span of the users location
-            let span: MKCoordinateSpan = MKCoordinateSpanMake(latDelta, longDelta)
-            //get the longitude and latitude coords of the user
-            let loc: CLLocationCoordinate2D = CLLocationCoordinate2DMake(mapView.userLocation.coordinate.latitude,
-                                                                     mapView.userLocation.coordinate.longitude)
-            //declare the region that the user is in to adjust the view
-            let region: MKCoordinateRegion = MKCoordinateRegionMake(loc, span)
-            //set the region
-            mapView.setRegion(region, animated: false)
-            //loadView()
-        }else{
-            loadView()
-        }
+        loadView()
     }
     
     //func dropNextPinLocation(UIButton)
     //when the pin button is tapped drop a pin on the POI
     func dropNextPinLocation(_ sender: UIButton){
-        //reset the image to the locateme image
-        locationButton.setImage(UIImage(named: "locateme.png"), for: .normal)
+        //check to see if we are currently tracking the users location
+        if mapView.showsUserLocation {
+            //stop tracking users location
+            mapView.showsUserLocation = false
+            //reset the image to the locateme image
+            locationButton.setImage(UIImage(named: "locateme.png"), for: .normal)
+            //change the target function from revert to findLocation
+            locationButton.removeTarget(self, action: #selector(revert(_:)), for: .touchUpInside)
+            locationButton.addTarget(self, action: #selector(findLocation(_:)), for: .touchUpInside)
+        }
+        
         //remove the current pin, if any, on map
-        if i > -1 {
+        if pinIndex > -1 {
             mapView.removeAnnotation(curPin!)
         }
         
@@ -187,8 +177,14 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         //once all POI have been pinned, set the target of the pin button
         //to revert to reset the view to default
-        if i == 5 {
-            sender.addTarget(self, action:#selector(MapViewController.revert(_:)), for: .touchUpInside)
+        if pinIndex == 5 {
+            //Now that we have cycled through all the pins,
+            //change the target func from dropNextPinLocation to revert so
+            //we can go back to default view
+            sender.removeTarget(self, action: #selector(dropNextPinLocation(_:)), for: .touchUpInside)
+            sender.addTarget(self, action:#selector(revert(_:)), for: .touchUpInside)
+            //set up pinIndex to start with 1st pin next time pin button is clicked
+            pinIndex = -1
         }
 
         //-- set the camera to be zoomed in on pin --
@@ -215,19 +211,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         let pinCoords: [Double] = [38.9757, -77.6419, 51.5833, -0.1833, 18.4587, -78.0113]
         
         //-- set the lat and long to correct pair in array --
-        if i<=3 {
-            droppedPin = true
-            i+=2
-        }else{
-            droppedPin = false
-            i = -1
+        if pinIndex <= 3 {
+            pinIndex += 2
         }
+        newPin.coordinate.latitude = pinCoords[pinIndex-1]
+        newPin.coordinate.longitude = pinCoords[pinIndex]
         
-        if i > -1 {
-        //set the location of the pin to the users location
-            newPin.coordinate.latitude = pinCoords[i-1]
-            newPin.coordinate.longitude = pinCoords[i]
-        }
         //set the current pin to the one just created
         curPin = newPin
 
